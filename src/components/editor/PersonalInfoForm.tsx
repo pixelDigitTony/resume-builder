@@ -1,9 +1,8 @@
 import type { ChangeEvent } from 'react'
 import { lazy, Suspense, useState } from 'react'
-import { DEFAULT_PHOTO_URL } from '../../data/defaultResume'
+import { UserRound } from 'lucide-react'
 import { useResume } from '../../context/ResumeContext'
 import { DEFAULT_PHOTO_CROP, type PhotoCrop } from '../../types/resume'
-import { cropImageToDataUrl } from '../../utils/photoCrop'
 import { Field, TextInput } from './Field'
 import { FormSection } from './FormSection'
 import { secondaryButton, subtleButton } from './buttonStyles'
@@ -46,21 +45,12 @@ export function PersonalInfoForm() {
     setCropSourceUrl(personal.photoOriginalUrl || personal.photoUrl)
   }
 
-  const resetPhoto = async () => {
-    try {
-      const photoUrl = await cropImageToDataUrl(DEFAULT_PHOTO_URL, DEFAULT_PHOTO_CROP)
-      updatePersonal({
-        photoUrl,
-        photoOriginalUrl: DEFAULT_PHOTO_URL,
-        photoCrop: DEFAULT_PHOTO_CROP,
-      })
-    } catch {
-      updatePersonal({
-        photoUrl: DEFAULT_PHOTO_URL,
-        photoOriginalUrl: DEFAULT_PHOTO_URL,
-        photoCrop: DEFAULT_PHOTO_CROP,
-      })
-    }
+  const removePhoto = () => {
+    updatePersonal({
+      photoUrl: '',
+      photoOriginalUrl: '',
+      photoCrop: DEFAULT_PHOTO_CROP,
+    })
   }
 
   return (
@@ -69,11 +59,17 @@ export function PersonalInfoForm() {
         <div className="space-y-4">
           <Field label="Profile photo">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <img
-                src={personal.photoUrl}
-                alt="Profile preview"
-                className="h-20 w-20 rounded-full border-4 border-teal-50 object-cover shadow-sm"
-              />
+              {personal.photoUrl ? (
+                <img
+                  src={personal.photoUrl}
+                  alt="Profile preview"
+                  className="h-20 w-20 rounded-full border-4 border-teal-50 object-cover shadow-sm"
+                />
+              ) : (
+                <div className="flex h-20 w-20 items-center justify-center rounded-full border border-dashed border-slate-300 bg-slate-50 text-slate-400" aria-label="No profile photo">
+                  <UserRound className="h-8 w-8" aria-hidden="true" />
+                </div>
+              )}
               <div className="flex flex-wrap gap-2">
                 <label className={`${secondaryButton} cursor-pointer`}>
                   Upload photo
@@ -87,16 +83,18 @@ export function PersonalInfoForm() {
                 <button
                   type="button"
                   onClick={openCropEditor}
+                  disabled={!personal.photoUrl}
                   className={secondaryButton}
                 >
                   Adjust crop
                 </button>
                 <button
                   type="button"
-                  onClick={() => void resetPhoto()}
+                  onClick={removePhoto}
+                  disabled={!personal.photoUrl}
                   className={subtleButton}
                 >
-                  Reset photo
+                  Remove photo
                 </button>
               </div>
             </div>

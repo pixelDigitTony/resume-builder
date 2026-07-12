@@ -71,7 +71,7 @@ npm run preview
 
 Resume data is stored in the browser's local storage. The application does not require a backend service to edit or export a resume.
 
-The included default resume and profile photo are sample content for development. Replace them before deploying or sharing a public instance if they contain personal information.
+New resumes start blank. No candidate profile, employment history, contact details, or profile photo is bundled as default resume content.
 
 ## Project Structure
 
