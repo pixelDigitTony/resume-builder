@@ -1,5 +1,10 @@
 /* Hex/rgb only - html2canvas-friendly layout (table/block, no flex/grid) */
 
+.resume-page,
+.resume-measure {
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
 .resume-preview-wrapper {
   position: relative;
   display: flex;
@@ -253,6 +258,8 @@
   display: table;
   width: 100%;
   table-layout: fixed;
+  border-collapse: collapse;
+  border-spacing: 0;
   overflow: visible;
 }
 
@@ -260,6 +267,7 @@
   display: table-cell;
   width: 26px;
   padding: 1px 4px 2px 0;
+  line-height: 0;
   vertical-align: top;
   overflow: visible;
 }
