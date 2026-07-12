@@ -11,9 +11,9 @@ const PAGE_GAP_PX = 24
 
 export function ResumePreview() {
   const { resume } = useResume()
-  const wrapperRef = useRef<HTMLDivElement>(null)
+  const scaleContainerRef = useRef<HTMLDivElement>(null)
   const measureRef = useRef<HTMLDivElement>(null)
-  const scale = usePreviewScale(wrapperRef)
+  const scale = usePreviewScale(scaleContainerRef)
   const layouts = useMainContentPagination(measureRef, A4_HEIGHT_PX)
   const pageCount = layouts.length
 
@@ -39,11 +39,10 @@ export function ResumePreview() {
       <MainContentMeasurer resume={resume} measureRef={measureRef} />
 
       <div
-        ref={wrapperRef}
         className="resume-preview-scroll"
         aria-label="Resume pages"
       >
-        <div className="resume-preview-viewport">
+        <div ref={scaleContainerRef} className="resume-preview-viewport">
           <div
             className="resume-preview-scaler"
             style={{

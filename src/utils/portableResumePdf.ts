@@ -61,9 +61,14 @@ export function embedResumeData(pdfBytes: Uint8Array, resume: Resume) {
   return output
 }
 
-export function savePdfWithResumeData(pdf: jsPDF, resume: Resume, fileName: string) {
+export function preparePdfBytes(pdfBytes: Uint8Array, resume?: Resume) {
+  return resume ? embedResumeData(pdfBytes, resume) : pdfBytes
+}
+
+export function savePdfFile(pdf: jsPDF, fileName: string, resume?: Resume) {
   const pdfBytes = new Uint8Array(pdf.output('arraybuffer'))
-  const blob = new Blob([embedResumeData(pdfBytes, resume)], { type: 'application/pdf' })
+  const outputBytes = preparePdfBytes(pdfBytes, resume)
+  const blob = new Blob([outputBytes], { type: 'application/pdf' })
   const url = URL.createObjectURL(blob)
   const anchor = document.createElement('a')
   anchor.href = url

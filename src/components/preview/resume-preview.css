@@ -58,6 +58,8 @@
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
+  overflow-anchor: none;
+  scrollbar-gutter: stable;
   border: 1px solid #d7dedc;
   border-radius: 8px;
   background-color: #dfe7e4;
@@ -65,12 +67,14 @@
 }
 
 .resume-preview-viewport {
+  contain: inline-size;
   width: 100%;
   overflow: visible;
 }
 
 .resume-preview-scaler {
   position: relative;
+  max-width: 100%;
   margin: 0 auto;
   overflow: visible;
 }

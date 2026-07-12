@@ -12,16 +12,19 @@ import {
   reapplyPreviewForExport,
 } from '../../utils/preparePreviewForExport'
 import { resolvePhotoForExport } from '../../utils/resolvePhotoForExport'
-import { savePdfWithResumeData } from '../../utils/portableResumePdf'
+import { savePdfFile } from '../../utils/portableResumePdf'
 import resumePreviewCss from '../preview/resume-preview.css?inline'
 import { primaryButton } from '../editor/buttonStyles'
+import { ExportDataDialog } from './ExportDataDialog'
 
 export function ExportPdfButton() {
   const { resume } = useResume()
   const [isExporting, setIsExporting] = useState(false)
   const [exportError, setExportError] = useState('')
+  const [showDataDialog, setShowDataDialog] = useState(false)
 
-  const handleExport = async () => {
+  const handleExport = async (includeEditableData: boolean) => {
+    setShowDataDialog(false)
     const pages = document.querySelectorAll<HTMLElement>('.resume-page')
     if (pages.length === 0) return
 
@@ -102,7 +105,11 @@ export function ExportPdfButton() {
         .trim()
         .replace(/\s+/g, '-')
         .replace(/[^a-zA-Z0-9-]/g, '')
-      savePdfWithResumeData(pdf, resume, `${fileName || 'resume'}.pdf`)
+      savePdfFile(
+        pdf,
+        `${fileName || 'resume'}.pdf`,
+        includeEditableData ? resume : undefined,
+      )
     } catch {
       setExportError('PDF export failed. Please try again after the preview finishes updating.')
     } finally {
@@ -116,7 +123,7 @@ export function ExportPdfButton() {
     <div className="grid gap-1">
       <button
         type="button"
-        onClick={handleExport}
+        onClick={() => setShowDataDialog(true)}
         disabled={isExporting}
         aria-busy={isExporting}
         className={primaryButton}
@@ -127,6 +134,13 @@ export function ExportPdfButton() {
       <span className="sr-only" aria-live="polite">
         {isExporting ? 'PDF export in progress' : exportError}
       </span>
+      {showDataDialog && (
+        <ExportDataDialog
+          formatName="Designed PDF"
+          onCancel={() => setShowDataDialog(false)}
+          onConfirm={(includeEditableData) => void handleExport(includeEditableData)}
+        />
+      )}
     </div>
   )
 }

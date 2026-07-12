@@ -2,15 +2,18 @@ import { FileDown } from 'lucide-react'
 import { useState } from 'react'
 import { useResume } from '../../context/ResumeContext'
 import { renderAtsPdf } from '../../utils/renderAtsPdf'
-import { savePdfWithResumeData } from '../../utils/portableResumePdf'
+import { savePdfFile } from '../../utils/portableResumePdf'
 import { secondaryButton } from '../editor/buttonStyles'
+import { ExportDataDialog } from './ExportDataDialog'
 
 export function ExportAtsPdfButton() {
   const { resume } = useResume()
   const [isExporting, setIsExporting] = useState(false)
   const [error, setError] = useState('')
+  const [showDataDialog, setShowDataDialog] = useState(false)
 
-  const handleExport = async () => {
+  const handleExport = async (includeEditableData: boolean) => {
+    setShowDataDialog(false)
     setIsExporting(true)
     setError('')
     try {
@@ -23,7 +26,11 @@ export function ExportAtsPdfButton() {
         .trim()
         .replace(/\s+/g, '-')
         .replace(/[^a-zA-Z0-9-]/g, '')
-      savePdfWithResumeData(pdf, resume, `${fileName || 'resume'}-ATS.pdf`)
+      savePdfFile(
+        pdf,
+        `${fileName || 'resume'}-ATS.pdf`,
+        includeEditableData ? resume : undefined,
+      )
     } catch {
       setError('ATS PDF export failed. Please try again.')
     } finally {
@@ -35,7 +42,7 @@ export function ExportAtsPdfButton() {
     <div className="grid gap-1">
       <button
         type="button"
-        onClick={handleExport}
+        onClick={() => setShowDataDialog(true)}
         disabled={isExporting}
         aria-busy={isExporting}
         className={secondaryButton}
@@ -46,6 +53,13 @@ export function ExportAtsPdfButton() {
       <span className="sr-only" aria-live="polite">
         {isExporting ? 'ATS PDF export in progress' : error}
       </span>
+      {showDataDialog && (
+        <ExportDataDialog
+          formatName="ATS PDF"
+          onCancel={() => setShowDataDialog(false)}
+          onConfirm={(includeEditableData) => void handleExport(includeEditableData)}
+        />
+      )}
     </div>
   )
 }
