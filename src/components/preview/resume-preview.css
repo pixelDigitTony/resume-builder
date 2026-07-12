@@ -272,6 +272,11 @@
   overflow: visible;
 }
 
+.resume-page--export .resume-contact-icon {
+  position: relative;
+  top: 6px;
+}
+
 .resume-sidebar-icon {
   display: block;
   width: 16px;
