@@ -149,7 +149,13 @@ export function SidebarSection({ resume, layout }: SidebarSectionProps) {
           data-sidebar-block-type="languages"
         >
           <h2 className="resume-sidebar-heading">Languages</h2>
-          <p className="resume-sidebar-muted">{visibleLanguages.join(', ')}</p>
+          <div className="resume-skill-labels">
+            {visibleLanguages.map((language, index) => (
+              <span key={`${language}-${index}`} className="resume-skill-label">
+                <span className="resume-skill-label-text">{language}</span>
+              </span>
+            ))}
+          </div>
         </section>
       )}
 
