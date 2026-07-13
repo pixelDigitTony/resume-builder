@@ -29,6 +29,7 @@ export function paginateSidebarBlocks(
     blocks.find((block) => block.type === 'skills-heading')?.height ?? 0
   let usedHeight = 0
   let current = createEmptySidebarLayout()
+  let hasPlacedSkillsHeading = false
 
   const pushPage = () => {
     if (hasSidebarContent(current)) {
@@ -47,11 +48,16 @@ export function paginateSidebarBlocks(
     if (block.height <= 0 || block.type === 'skills-heading') continue
 
     if (block.type === 'skill-group') {
-      const headingHeight = current.skillGroupIds.length === 0 ? skillsHeadingHeight : 0
+      const shouldPlaceHeading = !hasPlacedSkillsHeading
+      const headingHeight = shouldPlaceHeading ? skillsHeadingHeight : 0
       ensureRoom(headingHeight + block.height)
 
       if (block.skillGroupId) {
-        if (current.skillGroupIds.length === 0) usedHeight += skillsHeadingHeight
+        if (shouldPlaceHeading) {
+          current.showSkillsHeading = true
+          hasPlacedSkillsHeading = true
+          usedHeight += skillsHeadingHeight
+        }
         current.skillGroupIds.push(block.skillGroupId)
       }
       usedHeight += block.height

@@ -110,13 +110,15 @@ export function SidebarSection({ resume, layout }: SidebarSectionProps) {
 
       {selectedSkillGroups.length > 0 && (
         <section className="resume-sidebar-block">
-          <h2
-            className="resume-sidebar-heading"
-            data-sidebar-block="skills-heading"
-            data-sidebar-block-type="skills-heading"
-          >
-            Skills
-          </h2>
+          {layout.showSkillsHeading && (
+            <h2
+              className="resume-sidebar-heading"
+              data-sidebar-block="skills-heading"
+              data-sidebar-block-type="skills-heading"
+            >
+              Skills
+            </h2>
+          )}
           <div className="resume-skill-groups">
             {selectedSkillGroups.map((group) => (
               <div
@@ -127,7 +129,13 @@ export function SidebarSection({ resume, layout }: SidebarSectionProps) {
                 data-skill-group-id={group.id}
               >
                 <h3 className="resume-sidebar-strong">{group.label}</h3>
-                <p className="resume-sidebar-muted">{group.skills.filter(Boolean).join(', ')}</p>
+                <div className="resume-skill-labels">
+                  {group.skills.filter(Boolean).map((skill, index) => (
+                    <span key={`${skill}-${index}`} className="resume-skill-label">
+                      <span className="resume-skill-label-text">{skill}</span>
+                    </span>
+                  ))}
+                </div>
               </div>
             ))}
           </div>

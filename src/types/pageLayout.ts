@@ -1,6 +1,7 @@
 export interface SidebarLayout {
   showPhoto: boolean
   showContact: boolean
+  showSkillsHeading: boolean
   skillGroupIds: string[]
   showLanguages: boolean
   showEducation: boolean
@@ -27,6 +28,7 @@ export function createFullSidebarLayout(skillGroupIds: string[] = []): SidebarLa
   return {
     showPhoto: true,
     showContact: true,
+    showSkillsHeading: skillGroupIds.length > 0,
     skillGroupIds,
     showLanguages: true,
     showEducation: true,
@@ -37,6 +39,7 @@ export function createEmptySidebarLayout(): SidebarLayout {
   return {
     showPhoto: false,
     showContact: false,
+    showSkillsHeading: false,
     skillGroupIds: [],
     showLanguages: false,
     showEducation: false,
