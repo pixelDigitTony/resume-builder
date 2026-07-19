@@ -8,9 +8,9 @@ A modern, recruiter-focused resume builder built with React and TypeScript. It p
 - Live paginated A4 resume preview
 - Recruiter-readiness score with actionable content recommendations
 - Job-description keyword comparison for tailored resume variations
-- Designed two-column PDF export
+- Selectable-text, two-column browser PDF export
 - Selectable-text, single-column ATS PDF export
-- Importable app-generated PDFs with versioned embedded resume data
+- Importable ATS PDFs with optional versioned resume data
 - Saved resume variations for different roles or companies
 - Automatic local persistence and schema migrations
 - Profile-photo upload, crop, repositioning, and keyboard controls
@@ -21,9 +21,9 @@ A modern, recruiter-focused resume builder built with React and TypeScript. It p
 
 The **ATS PDF** uses a conventional single-column reading order and selectable text for applicant tracking systems and online applications.
 
-The **designed PDF** preserves the two-column visual resume, colors, profile photo, and presentation-oriented layout for direct sharing with recruiters.
+The **designed PDF** uses the browser's native print engine to preserve selectable text, links, colors, profile photo, and the two-column presentation. Choose **Save as PDF** in the print dialog.
 
-Both export formats contain an app-specific data payload. An unchanged PDF exported by this app can be imported later to restore its editable resume fields. PDFs created by older versions, modified by another PDF application, or generated elsewhere may not contain recoverable data.
+The ATS PDF can optionally contain an app-specific data payload. An unchanged ATS PDF exported with editable data can be imported later to restore its resume fields. Browser-printed designed PDFs, PDFs created by older versions, files modified by another PDF application, and PDFs generated elsewhere do not contain recoverable app data.
 
 ## Tech Stack
 
@@ -32,7 +32,6 @@ Both export formats contain an app-specific data payload. An unchanged PDF expor
 - Vite
 - Tailwind CSS 4
 - jsPDF
-- html2canvas
 - Lucide React
 
 ## Getting Started
@@ -64,8 +63,8 @@ npm run preview
 2. Open **Review** to check recruiter fundamentals and content quality.
 3. Save a variation and paste a job posting to compare recurring keywords.
 4. Use **Preview** to inspect page breaks and layout.
-5. Choose **ATS PDF** for online applications or **Export PDF** for the designed version.
-6. Use **Import PDF** to restore a PDF previously exported by this version of the app.
+5. Choose **ATS PDF** for a conventional single-column document or **Print PDF** for the designed version, then select **Save as PDF** in the browser dialog.
+6. Use **Import PDF** to restore an ATS PDF that was exported with editable data.
 
 ## Data and Privacy
 

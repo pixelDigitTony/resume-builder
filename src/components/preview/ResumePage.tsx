@@ -14,8 +14,8 @@ export function ResumePage({ resume, layout, pageNumber, pageCount }: ResumePage
   return (
     <div className="resume-page" data-page={pageNumber}>
       <div className="resume-page-grid">
-        <SidebarSection resume={resume} layout={layout.sidebar} />
         <MainSection resume={resume} layout={layout} />
+        <SidebarSection resume={resume} layout={layout.sidebar} />
       </div>
       <span className="resume-page-number" aria-hidden="true">
         Page {pageNumber} of {pageCount}

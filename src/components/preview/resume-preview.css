@@ -1,4 +1,4 @@
-/* Hex/rgb only - html2canvas-friendly layout (table/block, no flex/grid) */
+/* Print-stable A4 layout (table/block, no flex/grid). */
 
 .resume-page,
 .resume-measure {
@@ -129,6 +129,7 @@
   width: 100%;
   height: 297mm;
   border-collapse: collapse;
+  direction: rtl;
 }
 
 .resume-page-number {
@@ -185,6 +186,7 @@
   color: #ffffff;
   overflow: hidden;
   word-wrap: break-word;
+  direction: ltr;
 }
 
 .resume-sidebar--continuation {
@@ -385,6 +387,7 @@ a.resume-link:hover {
   color: #1e293b;
   overflow: hidden;
   word-wrap: break-word;
+  direction: ltr;
 }
 
 .resume-main-heading {

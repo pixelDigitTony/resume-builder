@@ -1,5 +1,6 @@
 import type { jsPDF } from 'jspdf'
 import type { Resume } from '../types/resume'
+import { getResumePdfMetadata } from './pdfMetadata'
 
 const PAGE_WIDTH = 210
 const PAGE_HEIGHT = 297
@@ -8,6 +9,7 @@ const CONTENT_WIDTH = PAGE_WIDTH - MARGIN * 2
 const BOTTOM_LIMIT = PAGE_HEIGHT - MARGIN
 
 export function renderAtsPdf(pdf: jsPDF, resume: Resume) {
+  pdf.setProperties(getResumePdfMetadata(resume))
   let y = MARGIN
 
   const ensureSpace = (height: number) => {

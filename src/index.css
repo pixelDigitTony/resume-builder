@@ -46,6 +46,11 @@ body {
 }
 
 @media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
   html,
   body,
   #root {
@@ -55,5 +60,81 @@ body {
 
   body {
     background: white;
+  }
+
+  body {
+    min-width: 210mm;
+  }
+
+  body [data-app-shell] {
+    display: block !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    background: white !important;
+  }
+
+  body [data-app-shell] > :not(main),
+  body [data-app-shell] > main > section:first-child,
+  body .resume-preview-header,
+  body .resume-measure {
+    display: none !important;
+  }
+
+  body [data-app-shell] > main {
+    display: block !important;
+    width: 210mm !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  body [data-app-shell] > main > section:last-child,
+  body .resume-preview-wrapper,
+  body .resume-preview-scroll,
+  body .resume-preview-viewport,
+  body .resume-preview-scaler,
+  body .resume-pages-scaled,
+  body .resume-pages-stack {
+    position: static !important;
+    display: block !important;
+    width: 210mm !important;
+    height: auto !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    transform: none !important;
+    contain: none !important;
+    background: white !important;
+  }
+
+  body .resume-page {
+    width: 210mm !important;
+    height: 296.9mm !important;
+    margin: 0 !important;
+    break-after: page;
+    page-break-after: always;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  body .resume-page-grid,
+  body .resume-sidebar,
+  body .resume-main {
+    height: 100% !important;
+  }
+
+  body .resume-page:last-child {
+    break-after: auto;
+    page-break-after: auto;
   }
 }

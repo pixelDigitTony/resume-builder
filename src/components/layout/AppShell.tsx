@@ -20,7 +20,7 @@ export function AppShell() {
   }
 
   return (
-    <div className="flex h-dvh min-h-0 flex-col overflow-hidden bg-[#eef2f1]">
+    <div data-app-shell className="flex h-dvh min-h-0 flex-col overflow-hidden bg-[#eef2f1]">
       <a
         href="#main-content"
         className="fixed left-3 top-3 z-50 -translate-y-20 rounded-lg bg-slate-950 px-3 py-2 text-sm font-medium text-white transition focus:translate-y-0"
@@ -81,11 +81,11 @@ export function AppShell() {
         </div>
       </div>
 
-      <main id="main-content" className="mx-auto grid min-h-0 w-full max-w-[1440px] flex-1 grid-rows-[minmax(0,1fr)] gap-6 overflow-hidden px-4 py-4 lg:grid-cols-[minmax(390px,0.9fr)_minmax(460px,1.1fr)] lg:px-6 lg:py-6">
+      <main id="main-content" className="relative mx-auto grid min-h-0 w-full max-w-[1440px] flex-1 grid-rows-[minmax(0,1fr)] gap-6 overflow-hidden px-4 py-4 lg:grid-cols-[minmax(390px,0.9fr)_minmax(460px,1.1fr)] lg:px-6 lg:py-6">
         <section aria-label="Resume editor" className={`h-full min-h-0 min-w-0 overflow-y-auto overscroll-contain pr-1 ${mobileView === 'edit' ? 'block' : 'hidden'} lg:block`}>
           <EditorPanel />
         </section>
-        <section aria-label="Resume preview" className={`h-full min-h-0 min-w-0 overflow-hidden ${mobileView === 'preview' ? 'block' : 'hidden'} lg:block`}>
+        <section aria-label="Resume preview" className={`h-full min-h-0 min-w-0 overflow-hidden ${mobileView === 'preview' ? 'block' : 'invisible pointer-events-none absolute inset-0'} lg:visible lg:pointer-events-auto lg:static lg:block`}>
           <ResumePreview />
         </section>
       </main>

@@ -29,3 +29,5 @@ my-files/
 *.njsproj
 *.sln
 *.sw?
+
+package-lock.json
