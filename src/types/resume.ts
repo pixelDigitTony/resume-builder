@@ -2,7 +2,10 @@ export interface CustomLink {
   id: string
   label: string
   url: string
+  icon: string
 }
+
+export type StandardLinkType = 'linkedin' | 'facebook' | 'portfolio' | 'github'
 
 export interface PhotoCrop {
   offsetX: number
@@ -23,6 +26,7 @@ export interface PersonalInfo {
   email: string
   location: string
   linkedin: string
+  facebook: string
   github: string
   portfolio: string
   photoUrl: string
@@ -63,6 +67,7 @@ export interface Education {
 
 export interface Resume {
   personal: PersonalInfo
+  standardLinks: StandardLinkType[]
   customLinks: CustomLink[]
   summary: string
   highlights: string[]

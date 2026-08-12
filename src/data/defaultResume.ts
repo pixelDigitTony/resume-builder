@@ -2,6 +2,7 @@ import type { Resume } from '../types/resume'
 import { DEFAULT_PHOTO_CROP } from '../types/resume'
 
 export const defaultResume: Resume = {
+  standardLinks: ['linkedin', 'facebook', 'portfolio'],
   customLinks: [],
   personal: {
     fullName: '',
@@ -10,6 +11,7 @@ export const defaultResume: Resume = {
     email: '',
     location: '',
     linkedin: '',
+    facebook: '',
     github: '',
     portfolio: '',
     photoUrl: '',

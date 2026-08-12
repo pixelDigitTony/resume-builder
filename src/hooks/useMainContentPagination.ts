@@ -57,9 +57,13 @@ export function useMainContentPagination(
         resume.personal.email,
         resume.personal.location,
         resume.personal.linkedin,
+        resume.personal.facebook,
         resume.personal.github,
         resume.personal.portfolio,
-        ...(resume.customLinks ?? []).map((link) => `${link.id}|${link.label}|${link.url}`),
+        resume.standardLinks.join(','),
+        ...(resume.customLinks ?? []).map(
+          (link) => `${link.id}|${link.label}|${link.url}|${link.icon}`,
+        ),
         ...resume.skillGroups.map(
           (group) => `${group.id}|${group.label}|${group.skills.join(',')}`,
         ),

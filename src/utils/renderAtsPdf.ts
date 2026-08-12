@@ -69,9 +69,7 @@ export function renderAtsPdf(pdf: jsPDF, resume: Resume) {
   )
   writeLines(
     [
-      resume.personal.linkedin,
-      resume.personal.github,
-      resume.personal.portfolio,
+      ...resume.standardLinks.map((type) => resume.personal[type]),
       ...resume.customLinks.map((link) => link.url),
     ]
       .filter(Boolean)

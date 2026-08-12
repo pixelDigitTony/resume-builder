@@ -1,6 +1,7 @@
 import { Plus, Trash2 } from 'lucide-react'
 import { useResume } from '../../context/ResumeContext'
 import { Field, TextInput } from './Field'
+import { CommaSeparatedInput } from './CommaSeparatedInput'
 import { FormSection } from './FormSection'
 import { addButton, dangerButton } from './buttonStyles'
 
@@ -44,16 +45,9 @@ export function SkillsForm() {
                   />
                 </Field>
                 <Field label="Skills (comma-separated)">
-                  <TextInput
-                    value={group.skills.join(', ')}
-                    onChange={(event) =>
-                      updateSkillGroup(group.id, {
-                        skills: event.target.value
-                          .split(',')
-                          .map((skill) => skill.trim())
-                          .filter(Boolean),
-                      })
-                    }
+                  <CommaSeparatedInput
+                    values={group.skills}
+                    onCommit={(skills) => updateSkillGroup(group.id, { skills })}
                   />
                 </Field>
               </div>
@@ -73,16 +67,9 @@ export function SkillsForm() {
 
       <FormSection title="Languages" eyebrow={`${resume.languages.length} listed`}>
         <Field label="Languages (comma-separated)">
-          <TextInput
-            value={resume.languages.join(', ')}
-            onChange={(event) =>
-              setLanguages(
-                event.target.value
-                  .split(',')
-                  .map((language) => language.trim())
-                  .filter(Boolean),
-              )
-            }
+          <CommaSeparatedInput
+            values={resume.languages}
+            onCommit={setLanguages}
           />
         </Field>
       </FormSection>

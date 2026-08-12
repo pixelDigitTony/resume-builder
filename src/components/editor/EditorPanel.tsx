@@ -117,9 +117,7 @@ export function EditorPanel() {
         icon: Link,
         component: SocialLinksForm,
         complete:
-          hasText(resume.personal.linkedin) ||
-          hasText(resume.personal.github) ||
-          hasText(resume.personal.portfolio) ||
+          resume.standardLinks.some((type) => hasText(resume.personal[type])) ||
           hasCustomLinks,
       },
       {

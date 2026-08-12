@@ -16,6 +16,7 @@ import type {
   Resume,
   ResumeTemplate,
   SkillGroup,
+  StandardLinkType,
 } from '../types/resume'
 
 const STORAGE_KEY = 'resume-builder-data'
@@ -46,6 +47,8 @@ type ResumeAction =
   | { type: 'ADD_SKILL_GROUP' }
   | { type: 'REMOVE_SKILL_GROUP'; payload: string }
   | { type: 'UPDATE_SKILL_GROUP'; payload: { id: string; data: Partial<SkillGroup> } }
+  | { type: 'ADD_STANDARD_LINK'; payload: StandardLinkType }
+  | { type: 'REMOVE_STANDARD_LINK'; payload: StandardLinkType }
   | { type: 'ADD_CUSTOM_LINK' }
   | { type: 'REMOVE_CUSTOM_LINK'; payload: string }
   | { type: 'UPDATE_CUSTOM_LINK'; payload: { id: string; data: Partial<CustomLink> } }
@@ -225,12 +228,24 @@ function resumeReducer(state: Resume, action: ResumeAction): Resume {
           group.id === action.payload.id ? { ...group, ...action.payload.data } : group,
         ),
       }
+    case 'ADD_STANDARD_LINK':
+      if (state.standardLinks.includes(action.payload)) return state
+      return {
+        ...state,
+        standardLinks: [...state.standardLinks, action.payload],
+      }
+    case 'REMOVE_STANDARD_LINK':
+      return {
+        ...state,
+        standardLinks: state.standardLinks.filter((type) => type !== action.payload),
+        personal: { ...state.personal, [action.payload]: '' },
+      }
     case 'ADD_CUSTOM_LINK':
       return {
         ...state,
         customLinks: [
           ...(state.customLinks ?? []),
-          { id: createId('link'), label: '', url: '' },
+          { id: createId('link'), label: '', url: '', icon: 'globe' },
         ],
       }
     case 'REMOVE_CUSTOM_LINK':
@@ -278,6 +293,8 @@ interface ResumeContextValue {
   addSkillGroup: () => void
   removeSkillGroup: (id: string) => void
   updateSkillGroup: (id: string, data: Partial<SkillGroup>) => void
+  addStandardLink: (type: StandardLinkType) => void
+  removeStandardLink: (type: StandardLinkType) => void
   addCustomLink: () => void
   removeCustomLink: (id: string) => void
   updateCustomLink: (id: string, data: Partial<CustomLink>) => void
@@ -482,6 +499,10 @@ export function ResumeProvider({ children }: { children: ReactNode }) {
       removeSkillGroup: (id) => dispatchAndPersist({ type: 'REMOVE_SKILL_GROUP', payload: id }),
       updateSkillGroup: (id, data) =>
         dispatchAndPersist({ type: 'UPDATE_SKILL_GROUP', payload: { id, data } }),
+      addStandardLink: (type) =>
+        dispatchAndPersist({ type: 'ADD_STANDARD_LINK', payload: type }),
+      removeStandardLink: (type) =>
+        dispatchAndPersist({ type: 'REMOVE_STANDARD_LINK', payload: type }),
       addCustomLink: () => dispatchAndPersist({ type: 'ADD_CUSTOM_LINK' }),
       removeCustomLink: (id) => dispatchAndPersist({ type: 'REMOVE_CUSTOM_LINK', payload: id }),
       updateCustomLink: (id, data) =>

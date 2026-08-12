@@ -26,6 +26,7 @@ export function getLinkLabel(url: string, fallback: string): string {
     const host = parsed.hostname.replace(/^www\./, '')
 
     if (host.includes('linkedin.com')) return 'LinkedIn'
+    if (host.includes('facebook.com') || host === 'fb.com') return 'Facebook'
     if (host.includes('github.com')) return 'GitHub'
 
     const path = parsed.pathname === '/' ? '' : parsed.pathname

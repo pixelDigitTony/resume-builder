@@ -1,6 +1,7 @@
 import { Plus, Trash2 } from 'lucide-react'
 import { useResume } from '../../context/ResumeContext'
 import { Field, TextArea, TextInput } from './Field'
+import { CommaSeparatedInput } from './CommaSeparatedInput'
 import { FormSection } from './FormSection'
 import { addButton, dangerButton } from './buttonStyles'
 
@@ -59,15 +60,10 @@ export function ProjectsForm() {
               </Field>
 
               <Field label="Technologies (comma-separated)">
-                <TextInput
-                  value={project.technologies.join(', ')}
-                  onChange={(event) =>
-                    updateProject(project.id, {
-                      technologies: event.target.value
-                        .split(',')
-                        .map((technology) => technology.trim())
-                        .filter(Boolean),
-                    })
+                <CommaSeparatedInput
+                  values={project.technologies}
+                  onCommit={(technologies) =>
+                    updateProject(project.id, { technologies })
                   }
                 />
               </Field>

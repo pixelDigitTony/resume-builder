@@ -18,7 +18,7 @@ export function ResumeReview({ onOpenSection }: ResumeReviewProps) {
 
   return (
     <div className="space-y-4">
-      <FormSection title="Recruiter readiness" eyebrow={`${analysis.score}/100`}>
+      <FormSection title="Hireability" eyebrow={`${analysis.score}/100`}>
         <div className="space-y-5">
           <div>
             <div className="mb-2 flex items-center justify-between gap-3 text-sm">
@@ -28,7 +28,7 @@ export function ResumeReview({ onOpenSection }: ResumeReviewProps) {
             <div
               className="h-2.5 overflow-hidden rounded-full bg-slate-100"
               role="progressbar"
-              aria-label="Recruiter readiness score"
+              aria-label="Hireability score"
               aria-valuemin={0}
               aria-valuemax={100}
               aria-valuenow={analysis.score}

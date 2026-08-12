@@ -1,16 +1,11 @@
 import type { Resume } from '../../types/resume'
 import type { SidebarLayout } from '../../types/pageLayout'
+import { STANDARD_LINK_DEFINITIONS } from '../../data/standardLinks'
+import { SocialIcon } from '../../data/socialIcons'
 import { normalizeEmail, normalizePhone } from '../../utils/linkUtils'
 import { ContactLink } from './ContactLink'
 import { ProfilePhoto } from './ProfilePhoto'
-import {
-  GithubIcon,
-  GlobeIcon,
-  LinkedinIcon,
-  MailIcon,
-  MapPinIcon,
-  PhoneIcon,
-} from './SidebarIcons'
+import { MailIcon, MapPinIcon, PhoneIcon } from './SidebarIcons'
 
 interface SidebarSectionProps {
   resume: Resume
@@ -18,7 +13,7 @@ interface SidebarSectionProps {
 }
 
 export function SidebarSection({ resume, layout }: SidebarSectionProps) {
-  const { personal, skillGroups, education, languages, customLinks } = resume
+  const { personal, standardLinks, skillGroups, education, languages, customLinks } = resume
   const selectedSkillGroups = skillGroups.filter((group) =>
     layout.skillGroupIds.includes(group.id),
   )
@@ -27,9 +22,7 @@ export function SidebarSection({ resume, layout }: SidebarSectionProps) {
     personal.phone ||
     personal.email ||
     personal.location ||
-    personal.linkedin ||
-    personal.github ||
-    personal.portfolio ||
+    standardLinks.some((type) => personal[type].trim()) ||
     (customLinks ?? []).some((link) => link.url.trim())
 
   return (
@@ -80,28 +73,29 @@ export function SidebarSection({ resume, layout }: SidebarSectionProps) {
                 </div>
               </li>
             )}
-            <ContactLink
-              href={personal.linkedin}
-              fallbackLabel="LinkedIn"
-              icon={<LinkedinIcon className="resume-sidebar-icon" />}
-            />
-            <ContactLink
-              href={personal.github}
-              fallbackLabel="GitHub"
-              icon={<GithubIcon className="resume-sidebar-icon" />}
-            />
-            <ContactLink
-              href={personal.portfolio}
-              fallbackLabel="Portfolio"
-              icon={<GlobeIcon className="resume-sidebar-icon" />}
-            />
+            {standardLinks.map((type) => {
+              const definition = STANDARD_LINK_DEFINITIONS[type]
+              return (
+                <ContactLink
+                  key={type}
+                  href={personal[type]}
+                  fallbackLabel={definition.label}
+                  icon={
+                    <SocialIcon
+                      name={definition.icon}
+                      className="resume-sidebar-icon"
+                    />
+                  }
+                />
+              )
+            })}
             {(customLinks ?? []).map((link) => (
               <ContactLink
                 key={link.id}
                 href={link.url}
                 label={link.label}
                 fallbackLabel="Link"
-                icon={<GlobeIcon className="resume-sidebar-icon" />}
+                icon={<SocialIcon name={link.icon} className="resume-sidebar-icon" />}
               />
             ))}
           </ul>

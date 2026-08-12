@@ -88,8 +88,11 @@ export function analyzeResume(resume: Resume, jobPosting = ''): ResumeAnalysis {
   if (!resume.personal.email.trim() || !resume.personal.phone.trim()) {
     add({ id: 'contact', section: 'personal', title: 'Complete direct contact details', detail: 'Include both a professional email and a reachable phone number.', priority: 'high' })
   }
-  if (!resume.personal.linkedin.trim() && !resume.personal.github.trim() && !resume.personal.portfolio.trim()) {
-    add({ id: 'links', section: 'links', title: 'Add proof-of-work links', detail: 'For a developer role, LinkedIn plus GitHub or a portfolio makes verification easier.', priority: 'medium' })
+  const hasLink =
+    resume.standardLinks.some((type) => resume.personal[type].trim()) ||
+    resume.customLinks.some((link) => link.url.trim())
+  if (!hasLink) {
+    add({ id: 'links', section: 'links', title: 'Add a professional link', detail: 'Add LinkedIn, Facebook, a portfolio, or another relevant profile that supports your application.', priority: 'medium' })
   }
   if (resume.summary.trim().length < 80) {
     add({ id: 'summary-short', section: 'summary', title: 'Strengthen the opening summary', detail: 'Aim for 2-4 concise lines covering experience level, core stack, domain strength, and value.', priority: 'high' })

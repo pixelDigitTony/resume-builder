@@ -1,7 +1,7 @@
 import type { Resume, ResumeTemplate } from '../types/resume'
 import { normalizeResume } from './normalizeResume'
 
-export const STORAGE_SCHEMA_VERSION = 2
+export const STORAGE_SCHEMA_VERSION = 3
 
 interface StorageEnvelope<T> {
   schemaVersion: number
@@ -31,6 +31,7 @@ function migrateResume(value: unknown, fromVersion: number): Resume {
   }
 
   // Version 2 consolidated photo crop, custom links, and current skill defaults.
+  // Version 3 added removable standard links, Facebook, and custom-link icons.
   return normalizeResume(migrated)
 }
 
