@@ -31,3 +31,5 @@ my-files/
 *.sw?
 
 package-lock.json
+bun.lock
+dist-renderer/

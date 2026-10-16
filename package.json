@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:renderer": "vite build --config vite.renderer.config.ts"
   },
   "dependencies": {
     "@iconify-icons/simple-icons": "^1.2.74",

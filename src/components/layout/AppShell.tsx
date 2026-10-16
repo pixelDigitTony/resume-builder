@@ -7,6 +7,7 @@ import { ExportAtsPdfButton } from '../export/ExportAtsPdfButton'
 import { ExportPdfButton } from '../export/ExportPdfButton'
 import { ImportResumeButton } from '../import/ImportResumeButton'
 import { ResumePreview } from '../preview/ResumePreview'
+import { ResumeBankNotice } from '../../context/ResumeBankContext'
 
 export function AppShell() {
   const { resume, templates, activeTemplateId, resetResume } = useResume()
@@ -58,6 +59,7 @@ export function AppShell() {
         </div>
       </header>
 
+      <ResumeBankNotice />
       <div className="z-10 shrink-0 border-b border-slate-200 bg-white p-2 lg:hidden">
         <div className="mx-auto grid max-w-md grid-cols-2 rounded-lg bg-slate-100 p-1" role="group" aria-label="Mobile workspace view">
           <button

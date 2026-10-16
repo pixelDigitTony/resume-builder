@@ -313,7 +313,7 @@ interface ResumeContextValue {
 
 const ResumeContext = createContext<ResumeContextValue | null>(null)
 
-export function ResumeProvider({ children }: { children: ReactNode }) {
+export function ResumeProvider({ children, initialResume }: { children: ReactNode; initialResume?: Resume }) {
   const [persistedResume, setPersistedResume] = useLocalStorage<Resume>(
     STORAGE_KEY,
     defaultResume,
@@ -326,7 +326,7 @@ export function ResumeProvider({ children }: { children: ReactNode }) {
     ACTIVE_TEMPLATE_STORAGE_KEY,
     '',
   )
-  const [resume, dispatch] = useReducer(resumeReducer, persistedResume)
+  const [resume, dispatch] = useReducer(resumeReducer, initialResume || persistedResume)
 
   const persist = useCallback(
     (nextResume: Resume) => {

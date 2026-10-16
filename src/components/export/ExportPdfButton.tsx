@@ -2,9 +2,13 @@ import { Printer } from 'lucide-react'
 import { useResume } from '../../context/ResumeContext'
 import { printResume } from '../../utils/printResume'
 import { primaryButton } from '../editor/buttonStyles'
+import { useResumeBank } from '../../context/ResumeBankContext'
+import { BankExportButton } from './BankExportButton'
 
 export function ExportPdfButton() {
   const { resume } = useResume()
+  const bank = useResumeBank()
+  if (bank.enabled) return <BankExportButton format="designed" />
 
   return (
     <div className="grid gap-1">

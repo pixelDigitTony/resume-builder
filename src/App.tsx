@@ -1,5 +1,6 @@
 import { AppShell } from './components/layout/AppShell'
 import { ResumeProvider } from './context/ResumeContext'
+import { ResumeBankProvider } from './context/ResumeBankContext'
 import { useSyncPhotoForExport } from './hooks/useSyncPhotoForExport'
 
 function AppContent() {
@@ -10,7 +11,7 @@ function AppContent() {
 function App() {
   return (
     <ResumeProvider>
-      <AppContent />
+      <ResumeBankProvider><AppContent /></ResumeBankProvider>
     </ResumeProvider>
   )
 }

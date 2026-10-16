@@ -5,12 +5,15 @@ import { renderAtsPdf } from '../../utils/renderAtsPdf'
 import { savePdfFile } from '../../utils/portableResumePdf'
 import { secondaryButton } from '../editor/buttonStyles'
 import { ExportDataDialog } from './ExportDataDialog'
+import { useResumeBank } from '../../context/ResumeBankContext'
+import { BankExportButton } from './BankExportButton'
 
 export function ExportAtsPdfButton() {
   const { resume } = useResume()
   const [isExporting, setIsExporting] = useState(false)
   const [error, setError] = useState('')
   const [showDataDialog, setShowDataDialog] = useState(false)
+  const bank = useResumeBank()
 
   const handleExport = async (includeEditableData: boolean) => {
     setShowDataDialog(false)
@@ -38,6 +41,7 @@ export function ExportAtsPdfButton() {
     }
   }
 
+  if (bank.enabled) return <BankExportButton format="ats" />
   return (
     <div className="grid gap-1">
       <button
