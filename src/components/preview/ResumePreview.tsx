@@ -6,15 +6,20 @@ import { A4_HEIGHT_PX, A4_WIDTH_PX, usePreviewScale } from '../../hooks/usePrevi
 import { MainContentMeasurer } from './MainContentMeasurer'
 import { ResumePage } from './ResumePage'
 import './resume-preview.css'
+import type { Resume } from '../../types/resume'
 
 const PAGE_GAP_PX = 24
 
 export function ResumePreview() {
   const { resume } = useResume()
+  return <ResumePreviewContent resume={resume} />
+}
+
+export function ResumePreviewContent({ resume }: { resume: Resume }) {
   const scaleContainerRef = useRef<HTMLDivElement>(null)
   const measureRef = useRef<HTMLDivElement>(null)
   const scale = usePreviewScale(scaleContainerRef)
-  const layouts = useMainContentPagination(measureRef, A4_HEIGHT_PX)
+  const layouts = useMainContentPagination(resume, measureRef, A4_HEIGHT_PX)
   const pageCount = layouts.length
 
   const fullWidth = A4_WIDTH_PX

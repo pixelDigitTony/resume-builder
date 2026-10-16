@@ -1,6 +1,6 @@
 import { useLayoutEffect, useMemo, useRef, useState, type RefObject } from 'react'
 import { A4_HEIGHT_PX } from './usePreviewScale'
-import { useResume } from '../context/ResumeContext'
+import type { Resume } from '../types/resume'
 import type { PageLayout } from '../types/pageLayout'
 import {
   createContinuationPageLayout,
@@ -29,10 +29,10 @@ function serializeLayouts(layouts: PageLayout[]): string {
 }
 
 export function useMainContentPagination(
+  resume: Resume,
   measureRef: RefObject<HTMLDivElement | null>,
   pageHeightPx = A4_HEIGHT_PX,
 ) {
-  const { resume } = useResume()
   const allJobIds = useMemo(
     () => resume.experience.map((job) => job.id),
     [resume.experience],

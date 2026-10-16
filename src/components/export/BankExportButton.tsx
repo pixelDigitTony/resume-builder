@@ -10,8 +10,8 @@ export function BankExportButton({ format }: { format: 'ats' | 'designed' }) {
   const bank = useResumeBank()
   const [optionsOpen, setOptionsOpen] = useState(false)
   return <div className="grid gap-1">
-    <button type="button" disabled={!bank.ready || bank.busy} aria-busy={bank.busy} onClick={() => setOptionsOpen(true)} className={format === 'designed' ? primaryButton : secondaryButton}>
-      <FileDown className="h-4 w-4" aria-hidden="true" />{format === 'designed' ? 'Download PDF' : 'ATS PDF'}
+    <button type="button" disabled={!bank.ready || bank.busy} aria-busy={bank.busy} onClick={() => { if (format === 'designed') void bank.exportResume(resume, format, false); else setOptionsOpen(true) }} className={format === 'designed' ? primaryButton : secondaryButton}>
+      <FileDown className="h-4 w-4" aria-hidden="true" />{format === 'designed' ? 'Print PDF' : 'ATS PDF'}
     </button>
     {optionsOpen && <ExportDataDialog formatName={format === 'designed' ? 'PDF' : 'ATS PDF'} onCancel={() => setOptionsOpen(false)} onConfirm={editable => { setOptionsOpen(false); void bank.exportResume(resume, format, editable) }} />}
   </div>
